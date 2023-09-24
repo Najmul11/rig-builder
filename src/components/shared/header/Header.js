@@ -12,7 +12,7 @@ const Header = () => {
   const user = "";
 
   return (
-    <div className="bg-[#292929]  fixed top-0 lg:static w-full">
+    <div className="bg-[#292929] fixed top-0 lg:static w-full z-20">
       <div className="navbar lg:container mx-auto lg:h-20">
         <div className="navbar-start">
           <div className="dropdown ">
@@ -21,7 +21,7 @@ const Header = () => {
             </label>
             <ul
               tabIndex={0}
-              className=" dropdown-content mt-3 z-[1] shadow bg-base-100 rounded-sm w-52"
+              className=" dropdown-content mt-3 z-[10] shadow bg-base-100 rounded-sm w-52"
             >
               <Dropdown />
             </ul>
@@ -38,7 +38,7 @@ const Header = () => {
                 </label>
                 <ul
                   tabIndex={0}
-                  className="dropdown-content z-[1]  shadow bg-base-100 rounded-sm w-52 "
+                  className="dropdown-content z-[10]  shadow bg-base-100 rounded-sm w-52 "
                 >
                   <Dropdown />
                 </ul>
@@ -96,7 +96,7 @@ const Header = () => {
         </div>
       </div>
       <div className={` bg-white ${showSearch ? "block lg:hidden" : "hidden"}`}>
-        <div className="lg:container mx-auto relative bg-green-500">
+        <div className="lg:container mx-auto relative ">
           <input
             type="text"
             placeholder="Search"

@@ -1,9 +1,16 @@
-import Slider from "@/components/home/Slider";
 import Head from "next/head";
 import RootLayout from "../components/layouts/RootLayout";
+import Slider from "@/components/home/slider/Slider";
+import Image from "next/image";
 
 const Home = () => {
-  return <></>;
+  return (
+    <>
+      <div className=" ">
+        <Slider />
+      </div>
+    </>
+  );
 };
 
 export default Home;
