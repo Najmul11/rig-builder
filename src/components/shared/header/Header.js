@@ -4,7 +4,6 @@ import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
 import { RxAvatar } from "react-icons/rx";
 import { useState } from "react";
 import Link from "next/link";
-import "../../../styles/Header.module.css";
 import Dropdown from "./Drop";
 
 const Header = () => {
@@ -77,9 +76,19 @@ const Header = () => {
                 <RxAvatar className="text-3xl text-white" />
                 <div className="text-neutral-400 font-semibold text-[12px] ">
                   <p className="text-white">Account</p>
-                  <button className="hover:text-[#63f3d4]">Register</button>
+                  <Link
+                    href={"/account/register"}
+                    className="hover:text-[#63f3d4]"
+                  >
+                    Register
+                  </Link>
                   <span> or </span>
-                  <button className="hover:text-[#63f3d4]">Login</button>
+                  <Link
+                    href={"/account/login"}
+                    className="hover:text-[#63f3d4]"
+                  >
+                    Login
+                  </Link>
                 </div>
               </div>
             )}

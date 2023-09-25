@@ -18,7 +18,7 @@ const SlidingHeadline = () => {
     <div className="py-5 ">
       <div className="lg:container lg:mx-auto mx-2 rounded-2xl  bg-stone-100 px-4">
         <Marquee>
-          <p className="py-2 rounded-lg">
+          <p className="py-2 rounded-lg text-right">
             <span>{formattedDate}</span>, our all outlets are open.
             Additionally, our online activities are open and operational.{" "}
           </p>
