@@ -1,7 +1,7 @@
+import FeaturedCategory from "@/components/home/featuredCategory/FeaturedCategory";
 import RootLayout from "../components/layouts/RootLayout";
 import Slider from "@/components/home/slider/Slider";
 import SlidingHeadline from "@/components/home/slider/SlidingHeadline";
-import FeaturedCategory from "@/components/home/slider/FeaturedCategory";
 
 const Home = () => {
   return (
