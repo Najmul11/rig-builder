@@ -26,7 +26,7 @@ export const getStaticProps = async () => {
     "http://localhost:5000/api/v1/products/?featured=true&limit=22"
   );
   const data = await res.json();
-  console.log(data);
+
   return {
     props: {
       featuredProds: data.data,
