@@ -12,7 +12,7 @@ const featuredCategories = [
   },
   {
     icon: <BsGpuCard />,
-    title: "Graphics Card ",
+    title: "Gpu",
   },
   {
     icon: <GiProcessor />,
