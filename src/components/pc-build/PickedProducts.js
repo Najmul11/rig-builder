@@ -1,10 +1,45 @@
+import {
+  resetCpu,
+  resetGpu,
+  resetMonitor,
+  resetMotherboard,
+  resetRam,
+  resetStorage,
+} from "@/redux/slices/pcBuildSlice";
 import Image from "next/image";
 import Link from "next/link";
 import { MdLoop } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
+import { useDispatch } from "react-redux";
 
 const PickedProducts = ({ product }) => {
   const { images, title, category, price } = product;
+  const dispatch = useDispatch();
+
+  const handleRemove = () => {
+    switch (category) {
+      case "Cpu":
+        dispatch(resetCpu());
+        break;
+      case "Gpu":
+        dispatch(resetGpu());
+        break;
+      case "Monitor":
+        dispatch(resetMonitor());
+        break;
+      case "Motherboard":
+        dispatch(resetMotherboard());
+        break;
+      case "Ram":
+        dispatch(resetRam());
+        break;
+      case "Storage":
+        dispatch(resetStorage());
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <div className="flex items-center px-2 lg:px-10 gap-5 justify-between  py-4 shadow-sm ">
       <div className="flex items-center gap-3">
@@ -29,7 +64,10 @@ const PickedProducts = ({ product }) => {
           {price}$
         </p>
         <div className="flex gap-3 text-lg lg:text-2xl   items-center">
-          <RxCross2 className="hover:text-red-600 cursor-pointer" />
+          <RxCross2
+            onClick={handleRemove}
+            className="hover:text-red-600 cursor-pointer"
+          />
           <Link href={`/pc-build/${category}`}>
             <MdLoop className="hover:text-red-600 cursor-pointer" />
           </Link>

@@ -61,7 +61,7 @@ const PcBuild = () => {
               Build Your Own Computer - Rig Builder.
             </h2>
             <p className="text-xl font-semibold  py-2 px-5 bg-[#04c3d8] rounded-md text-white ">
-              {totalPrice}$
+              {totalPrice.toFixed(2)}$
             </p>
           </div>
           <div className="flex flex-col gap-5">
