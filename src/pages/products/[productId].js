@@ -3,17 +3,40 @@ import Details from "@/components/products/[productId]/Details";
 import ImageDisplay from "@/components/products/[productId]/ImageDisplay";
 import Review from "@/components/products/[productId]/Review";
 import StarReview from "@/components/products/[productId]/StarReview";
-import { useGetReviewsQuery } from "@/redux/api/apiSlice";
+import {
+  useGetReviewsQuery,
+  usePostReviewMutation,
+} from "@/redux/api/apiSlice";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 
 const ProductDetails = ({ product }) => {
-  const [rating, setRating] = useState(null);
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
+
   const { user } = useSelector((state) => state.user);
 
-  const { title, status, keyFeatures, images, price, _id } = product;
+  const { images, _id } = product;
 
   const { data } = useGetReviewsQuery(_id);
+  const [postReview] = usePostReviewMutation();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      rating,
+      review,
+    };
+    const response = await postReview({ id: _id, data });
+    if (response.data) {
+      toast.success("Thanks for the feedback");
+      setRating(0);
+      setReview("");
+      e.target.elements.review.value = "";
+    }
+    if (response.error) toast.error("Something went weong");
+  };
 
   return (
     <div>
@@ -28,15 +51,22 @@ const ProductDetails = ({ product }) => {
               {user ? (
                 <div className="flex flex-col gap-5 py-6 bg-stone-100 px-4 rounded-md  lg:w-2/3">
                   <StarReview rating={rating} setRating={setRating} />
-                  <form className=" flex gap-5">
+                  <form onSubmit={handleSubmit} className=" flex gap-5">
                     <input
                       type="text"
                       placeholder="Your review here...."
                       name="review"
                       className="input border-inherit  pr-16 focus:outline-none"
+                      onChange={(e) => setReview(e.target.value)}
                     />
                     <button
-                      className={`text-sm font-semibold border-2 py-2 rounded-md  w-24  bg-[#04c3d8]  active:text-black border-[#04c3d8] text-white `}
+                      disabled={!review && !rating}
+                      type="submit"
+                      className={`${
+                        !review && !rating
+                          ? " bg-[#04c3d84f]"
+                          : "  bg-[#04c3d8]  active:text-black border-[#04c3d8] text-white"
+                      } text-sm font-semibold border-2 py-2 rounded-md  w-24 `}
                     >
                       Post review
                     </button>
