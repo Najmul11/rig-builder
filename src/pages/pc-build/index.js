@@ -10,16 +10,33 @@ import { MdOutlineSdStorage } from "react-icons/md";
 import { LuMonitorCheck } from "react-icons/lu";
 import ChooseComponent from "@/components/pc-build/ChooseComponent";
 import PickedProducts from "@/components/pc-build/PickedProducts";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCartFromPcBuild } from "@/redux/slices/cartSlice";
 
 const PcBuild = () => {
   const { motherboard, cpu, ram, monitor, storage, gpu } = useSelector(
     (state) => state.pcBuild
   );
 
-  const totalPrice = [motherboard, cpu, ram, monitor, storage, gpu]
-    .filter((component) => component !== null)
-    .reduce((total, component) => total + component.price, 0);
+  const dispatch = useDispatch();
+
+  const selectedProducts = [
+    motherboard,
+    cpu,
+    ram,
+    monitor,
+    storage,
+    gpu,
+  ].filter((product) => product !== null);
+
+  const totalPrice = selectedProducts.reduce(
+    (total, product) => total + product.price,
+    0
+  );
+
+  const handleAddtoCart = () => {
+    dispatch(addToCartFromPcBuild(selectedProducts));
+  };
 
   return (
     <div className="py-8 px-2">
@@ -33,7 +50,7 @@ const PcBuild = () => {
             className="w-14"
           />
 
-          <button className="text-xs font-semibold">
+          <button onClick={handleAddtoCart} className="text-xs font-semibold">
             <BiCartAdd className="text-4xl mx-auto text-[#04c3d8]" />
             <span className="hidden lg:block">Add to Cart</span>
           </button>

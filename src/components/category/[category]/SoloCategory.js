@@ -1,8 +1,16 @@
+import { addToCart } from "@/redux/slices/cartSlice";
 import Image from "next/image";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
 
 const SoloCategory = ({ product }) => {
   const { title, status, keyFeatures, images, price, _id } = product;
+
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+  };
   return (
     <Link href={`/products/${_id}`} className="shadow-md px-2 lg:px-0 relative">
       <Image
@@ -25,6 +33,7 @@ const SoloCategory = ({ product }) => {
       </div>
       <div className="bg-yellow-500 flex justify-center">
         <button
+          onClick={handleAddToCart}
           disabled={status === "Out of Stock"}
           className={`text-sm font-semibold border-2 ${
             status === "Out of Stock"
