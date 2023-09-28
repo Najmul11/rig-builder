@@ -1,32 +1,78 @@
 import RootLayout from "@/components/layouts/RootLayout";
+import { useUserLoginMutation } from "@/redux/api/apiSlice";
+import { setAccessToken } from "@/redux/slices/accessTokenSlice";
 import Link from "next/link";
 import React from "react";
+import { Controller, useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
+import { useDispatch } from "react-redux";
+import jwtDecode from "jwt-decode";
+import { setUser } from "@/redux/slices/userSlice";
+import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 
 const Login = () => {
+  const { control, handleSubmit, reset } = useForm();
+  const [userLogin] = useUserLoginMutation();
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const onSubmit = async (data) => {
+    const userData = {
+      email: data.email,
+      password: data.password,
+    };
+    const response = await userLogin(userData);
+    if (response.data) {
+      const accessToken = response.data?.data?.accessToken;
+      await dispatch(setAccessToken(accessToken));
+      const decodedToken = jwtDecode(accessToken);
+      await dispatch(setUser(decodedToken));
+      toast.success("You have logged in successfully");
+      router.push("/");
+    }
+    if (response.error) toast.error(response.error?.data?.message);
+  };
+
   return (
     <div className="lg:container mx-auto flex lg:justify-center ">
       <div className="px-2 mt-10 lg:mt-20 w-full lg:w-96">
         <h1 className="font-medium text-lg py-4">Account login</h1>
-        <form className="w-full">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full">
           <div className="form-contro">
             <label className="label">
               <span className="label-text">Email</span>
             </label>
-            <input
-              type="text"
-              placeholder="Email"
-              className="input input-bordered w-full h-10 rounded-sm focus:outline-none"
+            <Controller
+              name="email"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <input
+                  {...field}
+                  type="text"
+                  placeholder="Email"
+                  className="input input-bordered w-full h-10 rounded-sm focus:outline-none"
+                />
+              )}
             />
           </div>
           <div className="form-contro">
             <label className="label">
               <span className="label-text">Password</span>
             </label>
-            <input
-              type="text"
-              placeholder="Password"
-              className="input input-bordered w-full h-10 rounded-sm focus:outline-none"
+            <Controller
+              name="password"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <input
+                  {...field}
+                  type="password"
+                  placeholder="Password"
+                  className="input input-bordered w-full h-10 rounded-sm focus:outline-none"
+                />
+              )}
             />
             <div className="flex justify-between">
               <label className="label">

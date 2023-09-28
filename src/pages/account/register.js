@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 
 const Register = () => {
@@ -13,11 +13,15 @@ const Register = () => {
   const router = useRouter();
 
   const onSubmit = async (data) => {
+    if (data.password !== data?.confirmPassword)
+      return toast.error("Password do not match");
+
     const userData = {
       fullName: data.name,
       email: data.email,
       password: data.password,
     };
+
     const response = await createUser(userData);
     if (response.data) {
       toast.success("You have signed up successfully");
