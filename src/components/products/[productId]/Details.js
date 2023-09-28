@@ -7,7 +7,7 @@ const Details = ({ product }) => {
   return (
     <div className="flex flex-col gap-5 shadow-sm lg:pb-5 px-2 pb-2">
       <div className="flex flex-col lg:flex-row gap-2 justify-between">
-        <h2 className="text-neutral-500 font-semibold text-xl">
+        <h2 className="text-neutral-600 font-semibold text-xl">
           {title} <span className="text-xs">({status})</span>
         </h2>
         <StartRating ratings={ratings} />

@@ -2,7 +2,7 @@ import StartRating from "./StarRating";
 import { BsQuote } from "react-icons/bs";
 
 const Review = ({ review: userReview }) => {
-  const { userName, review, rating } = userReview;
+  const { user, review, rating } = userReview;
   return (
     <div className=" shadow-sm py-4 flex flex-col gap-3 px-2">
       <div className="flex flg:flex-row justify-center items-center lg:justify-between gap-3 ">
@@ -14,7 +14,7 @@ const Review = ({ review: userReview }) => {
           </div>
         </div>
       </div>
-      <p className="px-4 text-sm text-neutral-500">{userName}</p>
+      <p className="px-4 text-sm text-neutral-500">{user?.fullName}</p>
     </div>
   );
 };

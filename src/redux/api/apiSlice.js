@@ -14,6 +14,8 @@ export const api = createApi({
       return headers;
     },
   }),
+  tagTypes: ["reviews"],
+
   endpoints: (builder) => ({
     createUser: builder.mutation({
       query: (data) => ({
@@ -36,6 +38,21 @@ export const api = createApi({
         method: "GET",
       }),
     }),
+    getReviews: builder.query({
+      query: (id) => ({
+        url: `/reviews/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["reviews"],
+    }),
+    postReview: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/reviews/post-review/${id}`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["reviews"],
+    }),
   }),
 });
 
@@ -43,4 +60,6 @@ export const {
   useCreateUserMutation,
   useUserLoginMutation,
   useGetProfileQuery,
+  useGetReviewsQuery,
+  usePostReviewMutation,
 } = api;

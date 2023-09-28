@@ -3,24 +3,18 @@ import Details from "@/components/products/[productId]/Details";
 import ImageDisplay from "@/components/products/[productId]/ImageDisplay";
 import Review from "@/components/products/[productId]/Review";
 import StarReview from "@/components/products/[productId]/StarReview";
+import { useGetReviewsQuery } from "@/redux/api/apiSlice";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 const ProductDetails = ({ product }) => {
   const [rating, setRating] = useState(null);
-  const { title, status, keyFeatures, images, price, _id } = product;
-  const reviews = [
-    {
-      userName: "Naj",
-      review: "Awesome product. loved it",
-    },
-    {
-      userName: "Saj",
-      review:
-        "Awesome product. lorem20 hwllo heloo gwllo follow jillow dog fan goar ein boobs fuck dick breasts cock penis ",
-    },
-  ];
+  const { user } = useSelector((state) => state.user);
 
-  const user = "";
+  const { title, status, keyFeatures, images, price, _id } = product;
+
+  const { data } = useGetReviewsQuery(_id);
+
   return (
     <div>
       <div className="lg:container lg:mx-auto">
@@ -57,7 +51,7 @@ const ProductDetails = ({ product }) => {
               )}
             </div>
             <div className="lg:w-3/4">
-              {reviews.map((review, index) => (
+              {data?.data.map((review, index) => (
                 <Review key={index} review={review} />
               ))}
             </div>
