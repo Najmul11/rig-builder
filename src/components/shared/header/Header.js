@@ -5,10 +5,19 @@ import { RxAvatar } from "react-icons/rx";
 import { useState } from "react";
 import Link from "next/link";
 import Dropdown from "./Drop";
+import { useDispatch, useSelector } from "react-redux";
+import { clearUser } from "@/redux/slices/userSlice";
+import { clearAccessToken } from "@/redux/slices/accessTokenSlice";
 
 const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
-  const user = "";
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    await dispatch(clearUser());
+    await dispatch(clearAccessToken());
+  };
 
   return (
     <div className="bg-[#292929] fixed top-0 lg:static w-full z-20">
@@ -61,14 +70,16 @@ const Header = () => {
           <div className="hidden lg:block">
             {user ? (
               <div className="flex gap-4 items-center">
-                <div className="avatar placeholder">
-                  <div className="bg-neutral-focus text-neutral-content rounded-full w-8">
-                    <span className="text-xs">AA</span>
-                  </div>
-                </div>
                 <div className="text-neutral-400 font-semibold text-[12px] flex gap-3">
-                  <p className="text-white">Profile </p>
-                  <button className="hover:text-[#63f3d4]">Logout</button>
+                  <p className=" bg-stone-100 py-[2px] px-4 rounded-2xl">
+                    {user?.fullName}
+                  </p>
+                  <button
+                    onClick={handleLogout}
+                    className="hover:text-[#63f3d4]"
+                  >
+                    Logout
+                  </button>
                 </div>
               </div>
             ) : (

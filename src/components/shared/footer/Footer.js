@@ -9,9 +9,19 @@ import {
 import { PiCpuLight } from "react-icons/pi";
 import { MdOutlineLogout, MdOutlineManageAccounts } from "react-icons/md";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { clearUser } from "@/redux/slices/userSlice";
+import { clearAccessToken } from "@/redux/slices/accessTokenSlice";
 
 const Footer = () => {
-  const user = "d";
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    await dispatch(clearUser());
+    await dispatch(clearAccessToken());
+  };
+
   return (
     <div className="bg-[#292929] mb-10 lg:mb-0">
       <footer className="footer p-10  text-white lg:container lg:mx-auto">
@@ -84,7 +94,7 @@ const Footer = () => {
             PC Builder
           </Link>
           {user && (
-            <button className="text-[12px] ">
+            <button onClick={handleLogout} className="text-[12px] ">
               <MdOutlineLogout className="text-3xl text-[#04c3d8] z-50 mx-auto" />
               Logout
             </button>
