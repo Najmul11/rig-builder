@@ -9,8 +9,10 @@ import { CgSmartphoneRam } from "react-icons/cg";
 import { MdOutlineSdStorage } from "react-icons/md";
 import { LuMonitorCheck } from "react-icons/lu";
 import ChooseComponent from "@/components/pc-build/ChooseComponent";
+import PickedProducts from "@/components/pc-build/PickedProducts";
 
 const PcBuild = () => {
+  const motherboard = "f";
   return (
     <div className="py-8 px-2">
       <div className="lg:w-3/6 lg:mx-auto shadow-sm">
@@ -38,7 +40,15 @@ const PcBuild = () => {
             </p>
           </div>
           <div className="flex flex-col gap-5">
-            <ChooseComponent icon={<BsMotherboard />} title="Motherboard" />
+            {motherboard ? (
+              <PickedProducts
+                image={brandLogo2}
+                title="MSI MPG B550 GAMING EDGE WIFI"
+                category="Motherboard"
+              />
+            ) : (
+              <ChooseComponent icon={<BsMotherboard />} title="Motherboard" />
+            )}
             <ChooseComponent icon={<GiProcessor />} title="Processor" />
             <ChooseComponent icon={<CgSmartphoneRam />} title="Ram" />
             <ChooseComponent icon={<MdOutlineSdStorage />} title="Storage" />

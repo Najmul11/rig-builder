@@ -3,31 +3,35 @@ import Link from "next/link";
 const dropMenu = [
   {
     text: "Processor",
-    path: "/",
+    path: "/category/Processor",
   },
   {
     text: "Motherboard",
-    path: "/",
+    path: "/category/Motherboard",
   },
   {
     text: "RAM",
-    path: "/",
+    path: "/category/Ram",
   },
   {
     text: "Power Supply Unit",
-    path: "/",
+    path: "/category/Psu",
   },
   {
     text: "Storage Device",
-    path: "/",
+    path: "/category/Storage",
+  },
+  {
+    text: "Graphics Card",
+    path: "/category/Gpu",
   },
   {
     text: "Monitor",
-    path: "/",
+    path: "/category/Monitor",
   },
   {
     text: "Others",
-    path: "/",
+    path: "/category/Others",
   },
 ];
 
