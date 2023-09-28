@@ -21,7 +21,7 @@ const Details = ({ product }) => {
       <p className="">{description}</p>
       <p className="text-2xl ">{price}$</p>
       <button
-        onClick={() => toast.error("Grab a coffee till I develop this ")}
+        onClick={() => toast.error("Grab a coffee .Developer is sleeping ")}
         disabled={status === "Out of Stock"}
         className={`text-sm font-semibold border-2 ${
           status === "Out of Stock"

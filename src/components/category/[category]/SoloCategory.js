@@ -12,16 +12,23 @@ const SoloCategory = ({ product }) => {
     dispatch(addToCart(product));
   };
   return (
-    <Link href={`/products/${_id}`} className="shadow-md px-2 lg:px-0 relative">
-      <Image
-        height={400}
-        width={700}
-        src={images[0]}
-        alt="pc-build"
-        className="w-64 h-64 mx-auto"
-      />
+    <div className="shadow-md px-2 lg:px-0 relative">
+      <Link href={`/products/${_id}`}>
+        <Image
+          height={400}
+          width={700}
+          src={images[0]}
+          alt="pc-build"
+          className="w-64 h-64 mx-auto"
+        />
+      </Link>
       <div className="lg:px-5 py-2 flex flex-col gap-2 justify-between mb-12">
-        <p className="text-neutral-600 text-sm font-semibold">{title}</p>
+        <Link
+          href={`/products/${_id}`}
+          className="text-neutral-600 text-sm font-semibold hover:underline"
+        >
+          {title}
+        </Link>
         <ul className="list-disc px-5 text-[12px] font-semibold text-neutral-600">
           {keyFeatures.map((feature, index) => (
             <li key={index}>{feature}</li>
@@ -44,7 +51,7 @@ const SoloCategory = ({ product }) => {
           Add to Cart
         </button>
       </div>
-    </Link>
+    </div>
   );
 };
 

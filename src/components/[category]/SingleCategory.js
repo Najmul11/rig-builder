@@ -7,11 +7,12 @@ import {
   selectStorage,
 } from "@/redux/slices/pcBuildSlice";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 
 const SingleCategory = ({ product }) => {
-  const { title, status, keyFeatures, images, price, category } = product;
+  const { title, status, keyFeatures, images, price, category, _id } = product;
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -50,19 +51,23 @@ const SingleCategory = ({ product }) => {
   return (
     <div className="flex flex-col lg:flex-row mb-6  shadow-md px-5 items-center gap-5">
       <div className=" py-2">
-        <Image
-          height={400}
-          width={700}
-          src={images[0]}
-          alt="pc-build"
-          className="w-64 h-64"
-        />
+        <Link href={`/products/${_id}`}>
+          <Image
+            height={400}
+            width={700}
+            src={images[0]}
+            alt="pc-build"
+            className="w-64 h-64"
+          />
+        </Link>
       </div>
       <div className="flex lg:items-center lg:justify-between w-full flex-col lg:flex-row py-4">
         <div className="">
-          <h2 className="font-semibold ">
-            {title} <span className="text-xs">({status})</span>
-          </h2>
+          <Link href={`/products/${_id}`}>
+            <h2 className="font-semibold hover:underline ">
+              {title} <span className="text-xs">({status})</span>
+            </h2>
+          </Link>
           <ul class="list-disc px-5 text-[12px] font-semibold text-neutral-600">
             {keyFeatures.map((feature, index) => (
               <li key={index}>{feature}</li>
