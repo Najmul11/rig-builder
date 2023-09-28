@@ -10,9 +10,17 @@ import { MdOutlineSdStorage } from "react-icons/md";
 import { LuMonitorCheck } from "react-icons/lu";
 import ChooseComponent from "@/components/pc-build/ChooseComponent";
 import PickedProducts from "@/components/pc-build/PickedProducts";
+import { useSelector } from "react-redux";
 
 const PcBuild = () => {
-  const motherboard = "f";
+  const { motherboard, cpu, ram, monitor, storage, gpu } = useSelector(
+    (state) => state.pcBuild
+  );
+
+  const totalPrice = [motherboard, cpu, ram, monitor, storage, gpu]
+    .filter((component) => component !== null)
+    .reduce((total, component) => total + component.price, 0);
+
   return (
     <div className="py-8 px-2">
       <div className="lg:w-3/6 lg:mx-auto shadow-sm">
@@ -36,24 +44,40 @@ const PcBuild = () => {
               Build Your Own Computer - Rig Builder.
             </h2>
             <p className="text-xl font-semibold  py-2 px-5 bg-[#04c3d8] rounded-md text-white ">
-              1110$
+              {totalPrice}$
             </p>
           </div>
           <div className="flex flex-col gap-5">
             {motherboard ? (
-              <PickedProducts
-                image={brandLogo2}
-                title="MSI MPG B550 GAMING EDGE WIFI"
-                category="Motherboard"
-              />
+              <PickedProducts product={motherboard} />
             ) : (
               <ChooseComponent icon={<BsMotherboard />} title="Motherboard" />
             )}
-            <ChooseComponent icon={<GiProcessor />} title="Processor" />
-            <ChooseComponent icon={<CgSmartphoneRam />} title="Ram" />
-            <ChooseComponent icon={<MdOutlineSdStorage />} title="Storage" />
-            <ChooseComponent icon={<LuMonitorCheck />} title="monitor" />
-            <ChooseComponent icon={<BsGpuCard />} title="Gpu" />
+            {cpu ? (
+              <PickedProducts product={cpu} />
+            ) : (
+              <ChooseComponent icon={<GiProcessor />} title="Processor" />
+            )}
+            {ram ? (
+              <PickedProducts product={ram} />
+            ) : (
+              <ChooseComponent icon={<CgSmartphoneRam />} title="Ram" />
+            )}
+            {storage ? (
+              <PickedProducts product={storage} />
+            ) : (
+              <ChooseComponent icon={<MdOutlineSdStorage />} title="Storage" />
+            )}
+            {gpu ? (
+              <PickedProducts product={gpu} />
+            ) : (
+              <ChooseComponent icon={<BsGpuCard />} title="Gpu" />
+            )}
+            {monitor ? (
+              <PickedProducts product={monitor} />
+            ) : (
+              <ChooseComponent icon={<LuMonitorCheck />} title="Monitor" />
+            )}
           </div>
         </div>
       </div>

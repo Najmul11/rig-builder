@@ -19,7 +19,7 @@ const Category = ({ products }) => {
             handleMaxprice={handleMaxprice}
           />
         </div>
-        <div className="w-full lg:w-[75%] ">
+        <div className="w-full lg:w-[75%]">
           {products.map((product) => (
             <SingleCategory key={product._id} product={product} />
           ))}

@@ -1,17 +1,52 @@
+import {
+  selectCpu,
+  selectGpu,
+  selectMonitor,
+  selectMotherboard,
+  selectRam,
+  selectStorage,
+} from "@/redux/slices/pcBuildSlice";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 
 const SingleCategory = ({ product }) => {
-  const {
-    title,
-    category,
-    status,
-    keyFeatures,
-    images,
-    price,
-    _id,
-    description,
-  } = product;
+  const { title, status, keyFeatures, images, price, category } = product;
+
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const handleAddToBuilder = () => {
+    switch (category) {
+      case "Gpu":
+        dispatch(selectGpu(product));
+        router.push("/pc-build");
+        break;
+      case "Processor":
+        dispatch(selectCpu(product));
+        router.push("/pc-build");
+        break;
+      case "Monitor":
+        dispatch(selectMonitor(product));
+        router.push("/pc-build");
+        break;
+      case "Motherboard":
+        dispatch(selectMotherboard(product));
+        router.push("/pc-build");
+        break;
+      case "Ram":
+        dispatch(selectRam(product));
+        router.push("/pc-build");
+        break;
+      case "Storage":
+        dispatch(selectStorage(product));
+        router.push("/pc-build");
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="flex flex-col lg:flex-row mb-6  shadow-md px-5 items-center gap-5">
       <div className=" py-2">
@@ -37,6 +72,7 @@ const SingleCategory = ({ product }) => {
         <div className="text-center">
           <p className="text-xl my-3">{price}$</p>
           <button
+            onClick={handleAddToBuilder}
             disabled={status === "Out of Stock"}
             className={`text-sm font-semibold border-2 ${
               status === "Out of Stock"

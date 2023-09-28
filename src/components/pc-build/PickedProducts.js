@@ -3,13 +3,14 @@ import Link from "next/link";
 import { MdLoop } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 
-const PickedProducts = ({ title, image, category }) => {
+const PickedProducts = ({ product }) => {
+  const { images, title, category, price } = product;
   return (
     <div className="flex items-center px-2 lg:px-10 gap-5 justify-between  py-4 shadow-sm ">
       <div className="flex items-center gap-3">
         <Image
-          src={image}
-          alt="brand-logo"
+          src={images[0]}
+          alt="picked-product"
           height={100}
           width={200}
           className="w-14 h-14"
@@ -18,14 +19,14 @@ const PickedProducts = ({ title, image, category }) => {
           <p className="mb-0 leading-3 font-semibold text-neutral-500 text-xs">
             {category}
           </p>
-          <h2 className="text-neutral-600 font-semibold text-sm lg:text-lg">
+          <h2 className="text-neutral-600 font-semibold text-sm lg:text-md">
             {title}
           </h2>
         </div>
       </div>
       <div className="flex flex-col px-1 lg:flex-row items-center gap-2 lg:gap-16">
-        <p className="text-neutral-600 text-sm lg:text-lg font-semibold ">
-          100$
+        <p className="text-neutral-600 text-sm lg:text-md font-semibold ">
+          {price}$
         </p>
         <div className="flex gap-3 text-lg lg:text-2xl   items-center">
           <RxCross2 className="hover:text-red-600 cursor-pointer" />
