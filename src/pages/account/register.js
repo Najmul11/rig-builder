@@ -128,18 +128,7 @@ const Register = () => {
             Sign up
           </button>
         </form>
-        <div className="flex items-center justify-between my-2">
-          <hr className="w-[40%]" />
-          <span className="font-semibold ">or</span> <hr className="w-[40%]" />
-        </div>
-        <div className="flex justify-center">
-          <button className="btn rounded-3xl  border-0 hover:bg-transparent ">
-            <FcGoogle className="text-3xl" />
-            Continue with google
-          </button>
-        </div>
       </div>
-      <Toaster />
     </div>
   );
 };

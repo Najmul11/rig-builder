@@ -8,15 +8,23 @@ import Dropdown from "./Drop";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "@/redux/slices/userSlice";
 import { clearAccessToken } from "@/redux/slices/accessTokenSlice";
+import { useSession, signOut } from "next-auth/react";
 
 const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
+
+  const { data: session } = useSession();
+
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    await dispatch(clearUser());
-    await dispatch(clearAccessToken());
+    if (session) {
+      return signOut();
+    } else {
+      await dispatch(clearUser());
+      await dispatch(clearAccessToken());
+    }
   };
 
   return (
@@ -68,11 +76,11 @@ const Header = () => {
         </div>
         <div className="navbar-end flex gap-10">
           <div className="hidden lg:block">
-            {user ? (
+            {user || session ? (
               <div className="flex gap-4 items-center">
                 <div className="text-neutral-400 font-semibold text-[12px] flex gap-3">
                   <p className=" bg-stone-100 py-[2px] px-4 rounded-2xl">
-                    {user?.fullName}
+                    {user ? user.fullName : session?.user?.name}
                   </p>
                   <button
                     onClick={handleLogout}

@@ -10,9 +10,11 @@ import jwtDecode from "jwt-decode";
 import { setUser } from "@/redux/slices/userSlice";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 
 const Login = () => {
-  const { control, handleSubmit, reset } = useForm();
+  const { control, handleSubmit } = useForm();
+
   const [userLogin] = useUserLoginMutation();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -102,7 +104,14 @@ const Login = () => {
           <span className="font-semibold ">or</span> <hr className="w-[40%]" />
         </div>
         <div className="flex justify-center">
-          <button className="btn rounded-3xl  border-0 hover:bg-transparent ">
+          <button
+            onClick={() =>
+              signIn("google", {
+                callbackUrl: "http://localhost:3000/",
+              })
+            }
+            className="btn rounded-3xl  border-0 hover:bg-transparent "
+          >
             <FcGoogle className="text-3xl" />
             Continue with google
           </button>

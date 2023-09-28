@@ -3,8 +3,9 @@ import store from "@/redux/store";
 import "@/styles/globals.css";
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import jwtDecode from "jwt-decode";
+import { SessionProvider } from "next-auth/react";
 
 export default function App({ Component, pageProps }) {
   const getLayout = Component.getLayout || ((page) => page);
@@ -23,8 +24,10 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   return (
-    <Provider store={store}>
-      <Toaster /> {getLayout(<Component {...pageProps} />)}
-    </Provider>
+    <SessionProvider session={pageProps.session}>
+      <Provider store={store}>
+        <Toaster /> {getLayout(<Component {...pageProps} />)}
+      </Provider>
+    </SessionProvider>
   );
 }
