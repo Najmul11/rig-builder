@@ -1,10 +1,11 @@
-const Sidebar = ({ maxPrice, handleMaxprice }) => {
+const Sidebar = ({ maxPrice, handleMaxprice, setSearchQuery }) => {
   return (
     <div className="">
       <div className="form-control">
         <input
           type="text"
           placeholder="Search"
+          onChange={(e) => setSearchQuery(e.target.value)}
           className="input input-bordered w-full md:w-auto h-10 rounded-sm focus:outline-none "
         />
       </div>
@@ -18,7 +19,7 @@ const Sidebar = ({ maxPrice, handleMaxprice }) => {
             id="priceRange"
             name="priceRange"
             min={0}
-            max={5000}
+            max={1000}
             step={10}
             onChange={(e) => handleMaxprice(e)}
             className={`w-4/5`}

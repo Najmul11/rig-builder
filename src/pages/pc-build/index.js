@@ -12,6 +12,7 @@ import ChooseComponent from "@/components/pc-build/ChooseComponent";
 import PickedProducts from "@/components/pc-build/PickedProducts";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCartFromPcBuild } from "@/redux/slices/cartSlice";
+import Auth from "@/components/shared/protectedRoute/Auth";
 
 const PcBuild = () => {
   const { motherboard, cpu, ram, monitor, storage, gpu } = useSelector(
@@ -102,8 +103,16 @@ const PcBuild = () => {
   );
 };
 
-export default PcBuild;
+const PcBuildPage = () => {
+  return (
+    <Auth>
+      <PcBuild />
+    </Auth>
+  );
+};
 
-PcBuild.getLayout = function (page) {
+export default PcBuildPage;
+
+PcBuildPage.getLayout = function (page) {
   return <RootLayout>{page}</RootLayout>;
 };
