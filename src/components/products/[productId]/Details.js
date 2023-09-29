@@ -1,9 +1,18 @@
 import toast from "react-hot-toast";
 import StartRating from "./StarRating";
+import { useSession } from "next-auth/react";
 
 const Details = ({ product }) => {
   const { title, status, keyFeatures, price, _id, description, ratings } =
     product;
+
+  const { data: session } = useSession();
+
+  const handleAddtoCart = () => {
+    if (!session) return toast.error("Please login first");
+    dispatch(addToCartFromPcBuild(selectedProducts));
+    toast.success(" item added to cart");
+  };
 
   return (
     <div className="flex flex-col gap-5 shadow-sm lg:pb-5 px-2 pb-2">
@@ -21,7 +30,7 @@ const Details = ({ product }) => {
       <p className="">{description}</p>
       <p className="text-2xl ">{price}$</p>
       <button
-        onClick={() => toast.error("Grab a coffee .Developer is sleeping ")}
+        onClick={handleAddtoCart}
         disabled={status === "Out of Stock"}
         className={`text-sm font-semibold border-2 ${
           status === "Out of Stock"

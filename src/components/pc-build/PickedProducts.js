@@ -18,7 +18,7 @@ const PickedProducts = ({ product }) => {
 
   const handleRemove = () => {
     switch (category) {
-      case "Cpu":
+      case "Processor":
         dispatch(resetCpu());
         break;
       case "Gpu":

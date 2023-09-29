@@ -9,23 +9,14 @@ import {
 import { PiCpuLight } from "react-icons/pi";
 import { MdOutlineLogout, MdOutlineManageAccounts } from "react-icons/md";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { clearUser } from "@/redux/slices/userSlice";
-import { clearAccessToken } from "@/redux/slices/accessTokenSlice";
 import { useSession, signOut } from "next-auth/react";
 
 const Footer = () => {
-  const { user } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-
   const { data: session } = useSession();
 
   const handleLogout = async () => {
     if (session) {
       return signOut();
-    } else {
-      await dispatch(clearUser());
-      await dispatch(clearAccessToken());
     }
   };
   return (
@@ -83,7 +74,7 @@ const Footer = () => {
 
       <div className="px-5 py-3 fixed bottom-0  bg-[#292929] w-full lg:hidden shadow-sm shadow-white">
         <div className="flex justify-between text-white text-center ">
-          {user || session ? (
+          {session ? (
             <button className="text-[12px] ">
               <MdOutlineManageAccounts className="text-3xl text-[#04c3d8] z-50 mx-auto" />
               Profile
@@ -99,7 +90,7 @@ const Footer = () => {
             <PiCpuLight className="text-3xl text-[#04c3d8] z-50 mx-auto" />
             PC Builder
           </Link>
-          {(user || session) && (
+          {session && (
             <button onClick={handleLogout} className="text-[12px] ">
               <MdOutlineLogout className="text-3xl text-[#04c3d8] z-50 mx-auto" />
               Logout

@@ -5,25 +5,18 @@ import { RxAvatar } from "react-icons/rx";
 import { useState } from "react";
 import Link from "next/link";
 import Dropdown from "./Drop";
-import { useDispatch, useSelector } from "react-redux";
-import { clearUser } from "@/redux/slices/userSlice";
-import { clearAccessToken } from "@/redux/slices/accessTokenSlice";
+
 import { useSession, signOut } from "next-auth/react";
+import Cart from "./Cart";
 
 const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
 
   const { data: session } = useSession();
 
-  const { user } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-
   const handleLogout = async () => {
     if (session) {
       return signOut();
-    } else {
-      await dispatch(clearUser());
-      await dispatch(clearAccessToken());
     }
   };
 
@@ -43,7 +36,15 @@ const Header = () => {
             </ul>
           </div>
           <div className="flex  items-center w-full ">
-            <Image src={brandLogo} alt="brand-logo" height={200} width={200} />;
+            <Link href={"/"}>
+              {" "}
+              <Image
+                src={brandLogo}
+                alt="brand-logo"
+                height={200}
+                width={200}
+              />
+            </Link>
             <div className="hidden lg:flex items-center w-full justify-center">
               <div className="dropdown dropdown-hover">
                 <label
@@ -62,25 +63,20 @@ const Header = () => {
             </div>
           </div>
         </div>
-        <div className="navbar-center hidden lg:flex">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search"
-              className="input input-bordered lg:w-[400px] pr-16 rounded-sm "
-            />
-            <button className="btn  absolute top-0 right-0 rounded-l-none bg-transparent border-0  hover:bg-transparent ">
-              <AiOutlineSearch className=" text-2xl" />
-            </button>
+        {session && (
+          <div className="navbar-center hidden lg:flex">
+            <ul className="menu menu-horizontal px-1">
+              <Cart />
+            </ul>
           </div>
-        </div>
+        )}
         <div className="navbar-end flex gap-10">
           <div className="hidden lg:block">
-            {user || session ? (
+            {session ? (
               <div className="flex gap-4 items-center">
                 <div className="text-neutral-400 font-semibold text-[12px] flex gap-3">
                   <p className=" bg-stone-100 py-[2px] px-4 rounded-2xl">
-                    {user ? user.fullName : session?.user?.name}
+                    {session?.user?.name}
                   </p>
                   <button
                     onClick={handleLogout}

@@ -7,17 +7,19 @@ import {
   useGetReviewsQuery,
   usePostReviewMutation,
 } from "@/redux/api/apiSlice";
+import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
 
 const ProductDetails = ({ product }) => {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
 
-  const { user } = useSelector((state) => state.user);
+  const { data: session } = useSession();
 
   const { images, _id } = product;
+
+  console.log(session);
 
   const { data } = useGetReviewsQuery(_id);
   const [postReview] = usePostReviewMutation();
@@ -25,9 +27,12 @@ const ProductDetails = ({ product }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
+      user: session?.user?.email,
       rating,
       review,
     };
+    console.log(data);
+
     const response = await postReview({ id: _id, data });
     if (response.data) {
       toast.success("Thanks for the feedback");
@@ -48,7 +53,7 @@ const ProductDetails = ({ product }) => {
           <div className="lg:w-1/2 py-8">
             <Details product={product} />
             <div className="py-4 px-2  ">
-              {user ? (
+              {session ? (
                 <div className="flex flex-col gap-5 py-6 bg-stone-100 px-4 rounded-md  lg:w-2/3">
                   <StarReview rating={rating} setRating={setRating} />
                   <form onSubmit={handleSubmit} className=" flex gap-5">
@@ -95,7 +100,9 @@ const ProductDetails = ({ product }) => {
 export default ProductDetails;
 
 export async function getStaticPaths() {
-  const res = await fetch("http://localhost:5000/api/v1/products?limit=100");
+  const res = await fetch(
+    "https://rig-build-backend.vercel.app/api/v1/products?limit=100"
+  );
   const data = await res.json();
 
   const paths = data.data.map((product) => ({
@@ -110,9 +117,10 @@ export async function getStaticPaths() {
 
 export const getStaticProps = async ({ params }) => {
   const { productId } = params;
-  const res = await fetch(`http://localhost:5000/api/v1/products/${productId}`);
+  const res = await fetch(
+    `https://rig-build-backend.vercel.app/api/v1/products/${productId}`
+  );
   const data = await res.json();
-  console.log(data);
 
   return {
     props: {

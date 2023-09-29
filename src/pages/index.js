@@ -23,7 +23,7 @@ Home.getLayout = function getLayout(page) {
 
 export const getStaticProps = async () => {
   const res = await fetch(
-    "http://localhost:5000/api/v1/products/?featured=true&limit=22"
+    "https://rig-build-backend.vercel.app/api/v1/products/?featured=true&limit=22"
   );
   const data = await res.json();
 

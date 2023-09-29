@@ -1,15 +1,21 @@
 import { addToCart } from "@/redux/slices/cartSlice";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 
 const SoloCategory = ({ product }) => {
   const { title, status, keyFeatures, images, price, _id } = product;
 
   const dispatch = useDispatch();
+  const { data: session } = useSession();
 
   const handleAddToCart = () => {
+    if (!session) return toast.error("Please login first");
+
     dispatch(addToCart(product));
+    toast.success("Added to cart");
   };
   return (
     <div className="shadow-md px-2 lg:px-0 relative">

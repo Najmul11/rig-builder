@@ -49,7 +49,7 @@ export const getServerSideProps = async (context) => {
   const { category } = params;
 
   const res = await fetch(
-    `http://localhost:5000/api/v1/products/?category=${category}`
+    `https://rig-build-backend.vercel.app/api/v1/products/?category=${category}`
   );
   const data = await res.json();
 

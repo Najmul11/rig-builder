@@ -12,7 +12,7 @@ import ChooseComponent from "@/components/pc-build/ChooseComponent";
 import PickedProducts from "@/components/pc-build/PickedProducts";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCartFromPcBuild } from "@/redux/slices/cartSlice";
-import Auth from "@/components/shared/protectedRoute/Auth";
+import toast from "react-hot-toast";
 
 const PcBuild = () => {
   const { motherboard, cpu, ram, monitor, storage, gpu } = useSelector(
@@ -37,6 +37,7 @@ const PcBuild = () => {
 
   const handleAddtoCart = () => {
     dispatch(addToCartFromPcBuild(selectedProducts));
+    toast.success("All items added to cart");
   };
 
   return (
@@ -103,16 +104,8 @@ const PcBuild = () => {
   );
 };
 
-const PcBuildPage = () => {
-  return (
-    <Auth>
-      <PcBuild />
-    </Auth>
-  );
-};
+export default PcBuild;
 
-export default PcBuildPage;
-
-PcBuildPage.getLayout = function (page) {
+PcBuild.getLayout = function (page) {
   return <RootLayout>{page}</RootLayout>;
 };

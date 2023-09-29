@@ -10,13 +10,14 @@ const GeneralCategory = ({ products }) => {
 
   const handleMaxprice = (e) => {
     setMaxPrice(parseInt(e.target.value));
+    const filteredData = products.filter((item) => item?.price <= maxPrice);
+    setProductsToMap([...filteredData]);
   };
-
   useEffect(() => {
     const filteredData = products.filter((item) =>
       item?.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
-    setProductsToMap(filteredData);
+    setProductsToMap([...filteredData]);
   }, [products, searchQuery]);
 
   return (
@@ -43,7 +44,9 @@ const GeneralCategory = ({ products }) => {
 export default GeneralCategory;
 
 export async function getStaticPaths() {
-  const res = await fetch("http://localhost:5000/api/v1/products?limit=100");
+  const res = await fetch(
+    "https://rig-build-backend.vercel.app/api/v1/products?limit=100"
+  );
   const data = await res.json();
 
   const paths = data.data.map((category) => ({
@@ -59,7 +62,7 @@ export async function getStaticPaths() {
 export const getStaticProps = async ({ params }) => {
   const { category } = params;
   const res = await fetch(
-    `http://localhost:5000/api/v1/products?category=${category}`
+    `https://rig-build-backend.vercel.app/api/v1/products?category=${category}`
   );
   const data = await res.json();
 
