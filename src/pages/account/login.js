@@ -12,7 +12,7 @@ const Login = () => {
           <button
             onClick={() =>
               signIn("google", {
-                callbackUrl: "http://localhost:3000/",
+                callbackUrl: "https://rig-build-client.vercel.app/",
               })
             }
             className="btn rounded-3xl  border-0 hover:bg-transparent "
